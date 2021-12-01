@@ -451,30 +451,31 @@
 
 
 
-
+  <div id="giteement-ctn"></div>
   
-  <div id="gitment-ctn"></div>
-  
-    <!-- 中文 -->
-    <link rel="stylesheet" href="/lib/gitment.css">
-    <script src="/lib/gitment.js"></script>
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
   
   <script>
-    <!-- id: "GraphRNN" -->
-    var gitment = new Gitment({
-      id: "20200715155113",
-      owner: 'liuqinyi',
-      repo: 'MyComment',
-      oauth: {
-        client_id: '17848fa5691b625b47b1',
-        client_secret: '345954a7ae42910728fb8fc2cc7bc1745c264948',
-      },
-    })
-    gitment.render('gitment-ctn')
+  <!-- id: "GraphRNN" -->
+  var giteement = new Giteement({
+    id: '20200715155113',
+    owner: 'liuqinyi',
+    repo: 'MyComment',
+    backcall_uri: 'https://liuqinyi.github.io/',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: '7cc672d4c62ecf946fd9ecb3b8dbac59898d14ed15eb509d3dd6db5b61bc25c5',
+      client_secret: 'd59db95684be6f9f2352d001bdbe7905b02eaa27b2f1bf05ae389957ec6f53c3'
+    },
+  })
+  giteement.render('giteement-ctn')
   </script>
 
 
-  
+
+
+
 
 
 

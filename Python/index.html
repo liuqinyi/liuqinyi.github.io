@@ -6,25 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://liuqinyi.github.io">
-  <title>原生Pytorch实现GNN和GCN | 生活中的一茬韭菜</title>
+  <title>Python | 生活中的一茬韭菜</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="介绍使用原生的Pytorch 实现GNN模型和GCN 模型，在论文应用数据集Cora上进行训练和测试。 123456789101112import numpy as npimport osfrom tqdm import tqdmimport matplotlib.pyplot as pltimport torchimport torch.nn as nnimport torch.nn.funct">
-<meta property="og:type" content="article">
-<meta property="og:title" content="原生Pytorch实现GNN和GCN">
-<meta property="og:url" content="http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/index.html">
+  <meta name="description" content="读过研、考过公，最后还是要回归技术吧！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Python">
+<meta property="og:url" content="http://liuqinyi.github.io/Python/index.html">
 <meta property="og:site_name" content="生活中的一茬韭菜">
-<meta property="og:description" content="介绍使用原生的Pytorch 实现GNN模型和GCN 模型，在论文应用数据集Cora上进行训练和测试。 123456789101112import numpy as npimport osfrom tqdm import tqdmimport matplotlib.pyplot as pltimport torchimport torch.nn as nnimport torch.nn.funct">
+<meta property="og:description" content="读过研、考过公，最后还是要回归技术吧！">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/imgs/GNN_Scalar.svg">
-<meta property="og:image" content="http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/imgs/GCN_Scalar.svg">
-<meta property="article:published_time" content="2020-07-21T03:45:25.797Z">
-<meta property="article:modified_time" content="2020-07-21T04:09:26.065Z">
+<meta property="article:published_time" content="2021-12-01T07:49:08.000Z">
+<meta property="article:modified_time" content="2021-12-01T07:49:08.849Z">
 <meta property="article:author" content="JxustLeek">
-<meta property="article:tag" content="DL">
+<meta property="article:tag" content="Python全栈，深度学习">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="数据挖掘">
+<meta property="article:tag" content="图像处理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/imgs/GNN_Scalar.svg">
   
     <link rel="alternative" href="/atom.xml" title="生活中的一茬韭菜" type="application/atom+xml">
   
@@ -225,14 +225,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-GNN_and_GCN" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      原生Pytorch实现GNN和GCN
+      Python
     </h1>
   
 
@@ -244,8 +244,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/07/21/GNN_and_GCN/" class="archive-article-date">
-        <time datetime="2020-07-21T03:45:25.797Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
+<a href="/Python/index.html" class="archive-article-date">
+        <time datetime="2021-12-01T07:49:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-01</time>
 </a>
 
   
@@ -258,7 +258,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.5k字</span>
+      <span class="post-count">0字</span>
     </span>
   </span>
 
@@ -267,7 +267,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">1分</span>
     </span>
   </span>
 </div>
@@ -278,74 +278,7 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>使用原生的Pytorch 实现GNN模型和GCN 模型，在论文应用数据集Cora上进行训练和测试。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> tensorboardX <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">"ignore"</span>, category=UserWarning)</span><br></pre></td></tr></table></figure>
-
-<h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">content_path = <span class="string">'./cora/cora.content'</span></span><br><span class="line">cite_path = <span class="string">'./cora/cora.cites'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(content_path, <span class="string">'r'</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    contents = fp.readlines()</span><br><span class="line"><span class="keyword">with</span> open(cite_path, <span class="string">'r'</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    cites = fp.readlines()</span><br><span class="line">    </span><br><span class="line">contents = np.array([np.array(line.strip().split(<span class="string">'\t'</span>)) <span class="keyword">for</span> line <span class="keyword">in</span> contents])</span><br><span class="line">paper_list, feat_list, label_list = np.split(contents, [<span class="number">1</span>, <span class="number">-1</span>], axis=<span class="number">1</span>)</span><br><span class="line">paper_list, label_list = np.squeeze(paper_list), np.squeeze(label_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># paper, label --&gt; index</span></span><br><span class="line">paper_dict = dict([(key, val) <span class="keyword">for</span> val, key <span class="keyword">in</span> enumerate(paper_list)])</span><br><span class="line">labels = list(set(label_list))</span><br><span class="line">label_dict = dict([(key, val) <span class="keyword">for</span> val, key <span class="keyword">in</span> enumerate(labels)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># edges --&gt; index</span></span><br><span class="line">cites = [line.strip().split(<span class="string">'\t'</span>) <span class="keyword">for</span> line <span class="keyword">in</span> cites]</span><br><span class="line">cites = np.array([[paper_dict[i[<span class="number">0</span>]], paper_dict[i[<span class="number">1</span>]]] <span class="keyword">for</span> i <span class="keyword">in</span> cites], np.int64).T</span><br><span class="line"><span class="comment"># 是否需要将边倒转</span></span><br><span class="line">cites = np.concatenate((cites, cites[::<span class="number">-1</span>, :]), axis=<span class="number">1</span>) <span class="comment"># (2, 2 * edge) </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Degree</span></span><br><span class="line">_, degree_list = np.unique(cites[<span class="number">0</span>, :], return_counts=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">node_num = len(paper_list)</span><br><span class="line">feat_dim = feat_list.shape[<span class="number">1</span>]</span><br><span class="line">stat_dim = <span class="number">32</span></span><br><span class="line">num_class = len(labels)</span><br><span class="line"></span><br><span class="line">feat_matrix = torch.Tensor(feat_list.astype(np.float32))</span><br><span class="line">node1, node2 = np.split(cites, <span class="number">2</span>, axis=<span class="number">0</span>)</span><br><span class="line">node1, node2 = torch.from_numpy(np.squeeze(node1)), torch.from_numpy(np.squeeze(node2))</span><br><span class="line">label_list = torch.from_numpy(np.array([label_dict[i] <span class="keyword">for</span> i <span class="keyword">in</span> label_list]))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 如何确定degree 向量</span></span><br><span class="line">dg_list  = torch.Tensor(degree_list[node1])</span><br></pre></td></tr></table></figure>
-
-<h2 id="GNN原理介绍"><a href="#GNN原理介绍" class="headerlink" title="GNN原理介绍"></a>GNN原理介绍</h2><p>定一个graph (V, E), 需要使用GNN模型对其进行训练，最终目的是为了学习每个节点的低维表示向量$x_n$用于下游任务。<br><br>通过Embeding方法（或者multi-hot编码）初始化每个节点的属性特征（feat）， 用向量集$l_n$表示；初始化每个节点的状态特征（stat），用向量集$x_n$表示。<br><br>然后由图的关系可以的到每个节点的所有邻居的的属性特征集$l_{ne[n]}$、 状态特征集$x_{ne[n]}$以及关联边的特征集$l_{co[n]}\in{l_{(n, <em>)}}$<br>因此整个GNN的学习过程如公式（1）<br>$$<br>\begin{equation}<br>x_n=f_w(l_n, l_{co[n]}, x_{ne[n]}, l_{ne[n]}) \<br>o_n = g_w(x_n, l_n)<br>\tag{1}<br>\end{equation}<br>$$<br><br><br>上述公式整合所有属性特征、状态特征和输出等可以表示为：<br>$$<br>x = F_w(x, l) \<br>o = G_w(x, l_N)<br>\tag{2}<br>$$<br>因此实际上等式（2）就定义了一个*</em>压缩映射**, 这里假设$F_w$是这个压缩映射，那么对于$\forall x, y, \hspace{0.2cm} ||F_w(x, l) - F_w(y, l)|| \le ||x-y||$<br><br></p>
-<p>对于nonpositional graph, 可对于公式（1）其具体设计如下：<br>$$<br>x_n = \sum_{u \in ne[n]} A_{n, u}x_u + b_n \<br>A_{n,u} = \frac{\mu}{s|ne[u]|}rresize(\phi_w(l_n, l_{(n, u)}, l_u)) \<br>b_n = \rho_w(l_n)<br>\tag{3}<br>$$<br><br><br>$\phi_w:\mathbb{R}^{2l_N+l_E} \to \mathbb{R}^{s^2}$和$\rho_w:\mathbb{R}^{l_N} \to \mathbb{R}^{s}$ 都是以<em>tanh()<em>作为激活函数的全连接神经网络(FNN)，分别叫做</em>transition network<em>和</em>forcing network</em><br><br>$\frac{\mu}{s|ne[u]|}$ 表示一个相乘因子，保证可微性<br><br>$resize(\centerdot)$ 表示将$s^2$-dimensional vector转换为 $s\times s$ matrix</p>
-<p>$$<br>g_w = softmax(\psi_w(x_n, l_n))<br>\tag{4}<br>$$<br><br><br>$\psi_w:\mathbb{R}^{s + l_n} \to \mathbb{R}^{\mathcal C}$ 是一个全连接网络<br><br><br><br><br>通过经典的迭代方法计算状态向量<br>$$<br>x(t+1) = F_w(x(t), l) \<br>o = G_w(x(t), l_N) \<br>或：\<br>x_n(t+1)=f_w(l_n, l_{co[n]}, x_{ne[n]}(t), l_{ne[n]}) \<br>o_n = g_w(x_n(t), l_n)<br>$$</p>
-<h3 id="GNN-代码实现"><a href="#GNN-代码实现" class="headerlink" title="GNN 代码实现"></a>GNN 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearGNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, node_num,  feat_dim, stat_dim, num_class, T, mu=<span class="number">0.9</span>)</span>:</span></span><br><span class="line">        super(LinearGNN, self).__init__()</span><br><span class="line">        self.node_num = node_num</span><br><span class="line">        self.feat_dim = feat_dim</span><br><span class="line">        self.stat_dim = stat_dim</span><br><span class="line">        self.T = T</span><br><span class="line">        self.num_class = num_class</span><br><span class="line">        self.mu = mu</span><br><span class="line">        </span><br><span class="line">        self.linear1 = nn.Linear(in_features=<span class="number">2</span> * self.feat_dim, out_features=self.stat_dim ** <span class="number">2</span>)</span><br><span class="line">        self.tanh = nn.Tanh()</span><br><span class="line">        self.linear2 = nn.Linear(in_features=self.feat_dim, out_features=self.stat_dim) </span><br><span class="line">        self.out_layer = nn.Sequential(</span><br><span class="line">            nn.Linear(self.stat_dim, self.num_class),</span><br><span class="line">            nn.Tanh(), </span><br><span class="line">            nn.Dropout(p=<span class="number">0.5</span>),</span><br><span class="line">            nn.LogSoftmax(dim=<span class="number">-1</span>)</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Hw</span><span class="params">(self, input_feat, stat_feat, dg_list)</span>:</span></span><br><span class="line">        A = self.linear1(input_feat).view(input_feat.shape[<span class="number">0</span>], self.stat_dim, self.stat_dim)</span><br><span class="line">        A = self.tanh(A)</span><br><span class="line">        <span class="comment"># 这个是什么意思？？</span></span><br><span class="line">        A = A * self.mu / self.stat_dim / dg_list.view((<span class="number">-1</span>, <span class="number">1</span>, <span class="number">1</span>)) </span><br><span class="line">        <span class="comment"># 取node1的feat学习b（学习中心的节点的偏置值）</span></span><br><span class="line">        b = self.linear2(torch.chunk(input_feat, chunks=<span class="number">2</span>, dim=<span class="number">1</span>)[<span class="number">0</span>])</span><br><span class="line">        out = torch.squeeze(torch.matmul(A, torch.unsqueeze(stat_feat, <span class="number">2</span>)), <span class="number">-1</span>) + b <span class="comment">## (batch, s, s) * (batch, s) + (batch, s)</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> out <span class="comment"># (batch, s)</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Aggr</span><span class="params">(self, H, node1)</span>:</span></span><br><span class="line">    </span><br><span class="line">        mask = torch.stack([node1] * self.node_num, <span class="number">0</span>)</span><br><span class="line">        mask = mask.float() - torch.unsqueeze(torch.arange(<span class="number">0</span>, self.node_num).float().to(mask.device), <span class="number">1</span>)</span><br><span class="line">        mask = (mask == <span class="number">0</span>).float()</span><br><span class="line">        <span class="keyword">return</span> torch.mm(mask, H)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, feat_matrix, node1, node2, dg_list)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        node1：第一列数据，表示中心节点</span></span><br><span class="line"><span class="string">        node2: 第二列数据，表示邻居节点</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        input_feat = torch.cat((feat_matrix[node1], feat_matrix[node2]), <span class="number">1</span>)</span><br><span class="line">        input_stat = torch.zeros((self.node_num, self.stat_dim), dtype=torch.float32).to(feat_matrix.device)</span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> range(self.T):</span><br><span class="line">            stat_feat = torch.index_select(input_stat, <span class="number">0</span>, node2)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 计算每个中心节点的领域节点的输出stat, 然后将它们聚合得到该中心节点的stat</span></span><br><span class="line">            node2_stat = self.Hw(input_feat, stat_feat, dg_list)</span><br><span class="line">            stat = self.Aggr(node2_stat, node1)</span><br><span class="line">        </span><br><span class="line">        out = self.out_layer(stat)</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
-
-<h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">train_mask = torch.zeros(node_num, dtype=torch.uint8)</span><br><span class="line">train_mask[:node_num - <span class="number">1000</span>] = <span class="number">1</span>                  <span class="comment"># 1700左右training</span></span><br><span class="line">val_mask = <span class="literal">None</span>                                    <span class="comment"># 0valid</span></span><br><span class="line">test_mask = torch.zeros(node_num, dtype=torch.uint8)</span><br><span class="line">test_mask[node_num - <span class="number">500</span>:] = <span class="number">1</span> </span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">'cuda'</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">'cpu'</span>)</span><br><span class="line">model = LinearGNN(node_num, feat_dim, stat_dim, num_class, T=<span class="number">3</span>).to(device)</span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=<span class="number">0.01</span>, weight_decay=<span class="number">1e-3</span>)</span><br><span class="line">feat_matrix = feat_matrix.to(device)</span><br><span class="line">node1 = node1.to(device)</span><br><span class="line">node2 = node2.to(device)</span><br><span class="line">label_list = label_list.to(device)</span><br><span class="line">dg_list = dg_list.to(device)</span><br><span class="line"></span><br><span class="line">writer1 = SummaryWriter(<span class="string">'./models/result'</span>, comment=<span class="string">'GNN'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">200</span>):</span><br><span class="line">    model.train()</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    out = model(feat_matrix, node1, node2, dg_list)</span><br><span class="line">    _, pred = out.max(dim=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    loss = F.nll_loss(out[train_mask], label_list[train_mask])</span><br><span class="line">    </span><br><span class="line">    train_correct = float(pred[train_mask].eq(label_list[train_mask]).sum().item())</span><br><span class="line">    train_acc = train_correct / train_mask.sum().item()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># print('[Epoch &#123;&#125;/100] Loss &#123;:.4f&#125;, train acc &#123;:.4f&#125;'.format(epoch, loss.cpu().detach().data.item(), acc))</span></span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line">    </span><br><span class="line">    model.eval()</span><br><span class="line">    test_correct = float(pred[test_mask].eq(label_list[test_mask]).sum().item())</span><br><span class="line">    test_acc = test_correct / test_mask.sum().item()</span><br><span class="line">    </span><br><span class="line">    writer1.add_scalars(<span class="string">'GNN_Scalar'</span>, &#123;<span class="string">'loss'</span>: loss, <span class="string">'train_acc'</span>: train_acc, <span class="string">'test_acc'</span>: test_acc&#125;, epoch)</span><br><span class="line">    <span class="comment"># 没10个epoch 评估test data</span></span><br><span class="line">    <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'[Epoch &#123;&#125;/100] Loss &#123;:.4f&#125;, train acc &#123;:.4f&#125;, test acc &#123;:.4f&#125;'</span>.format(epoch, loss.cpu().detach().data.item(), train_acc, test_acc))</span><br><span class="line">        </span><br><span class="line">        checkpoint = &#123;</span><br><span class="line">            <span class="string">'net'</span>: model.state_dict(),</span><br><span class="line">            <span class="string">'optimizer'</span>: optimizer.state_dict(),</span><br><span class="line">            <span class="string">'epoch'</span>: epoch</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(<span class="string">'./models/checkpoint'</span>):</span><br><span class="line">            os.makedirs(<span class="string">'./models/checkpoint'</span>)</span><br><span class="line">        torch.save(checkpoint, <span class="string">'./models/checkpoint/ckpt_best_%s.pth'</span>%(str(epoch)))</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
-
-<pre><code>[Epoch 9/100] Loss 1.1499, train acc 0.5843, test acc 0.4520
-[Epoch 19/100] Loss 1.0246, train acc 0.6200, test acc 0.4940
-[Epoch 29/100] Loss 0.9539, train acc 0.6587, test acc 0.4440
-[Epoch 39/100] Loss 0.9651, train acc 0.6470, test acc 0.4740
-[Epoch 49/100] Loss 0.9373, train acc 0.6598, test acc 0.4980
-[Epoch 59/100] Loss 0.9166, train acc 0.6751, test acc 0.4900
-[Epoch 69/100] Loss 0.9454, train acc 0.6552, test acc 0.4700
-[Epoch 79/100] Loss 0.9451, train acc 0.6546, test acc 0.4840
-[Epoch 89/100] Loss 0.9414, train acc 0.6522, test acc 0.4920
-[Epoch 99/100] Loss 0.9356, train acc 0.6534, test acc 0.5020
-[Epoch 109/100] Loss 0.9420, train acc 0.6470, test acc 0.5100
-[Epoch 119/100] Loss 0.9573, train acc 0.6475, test acc 0.4780
-[Epoch 129/100] Loss 0.9466, train acc 0.6423, test acc 0.4880
-[Epoch 139/100] Loss 0.9559, train acc 0.6481, test acc 0.5060
-[Epoch 149/100] Loss 0.9148, train acc 0.6715, test acc 0.4540
-[Epoch 159/100] Loss 0.9442, train acc 0.6464, test acc 0.4860
-[Epoch 169/100] Loss 0.9401, train acc 0.6470, test acc 0.4640
-[Epoch 179/100] Loss 0.9640, train acc 0.6399, test acc 0.4820
-[Epoch 189/100] Loss 0.9395, train acc 0.6557, test acc 0.4920
-[Epoch 199/100] Loss 0.9522, train acc 0.6464, test acc 0.4660</code></pre><h2 id="GCN-原理设计-空间卷积"><a href="#GCN-原理设计-空间卷积" class="headerlink" title="GCN 原理设计(空间卷积)"></a>GCN 原理设计(空间卷积)</h2><ol>
-<li><p>空间卷积</p>
-</li>
-<li><p>谱域卷积</p>
-</li>
-</ol>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNConv</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, in_channel, out_channel, node_num)</span>:</span></span><br><span class="line">        super(GCNConv, self).__init__()</span><br><span class="line">        self.linear = nn.Linear(in_channel, out_channel)</span><br><span class="line">        self.node_num = node_num</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, edge_index)</span>:</span></span><br><span class="line">        <span class="comment"># Add self-connect edges</span></span><br><span class="line">        edge_index = self.addSelfConnect(edge_index, x.shape[<span class="number">0</span>])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Apply linear transform</span></span><br><span class="line">        x = self.linear(x)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Normalize message</span></span><br><span class="line">        row, col = edge_index</span><br><span class="line">        deg = self.calDegree(row, x.shape[<span class="number">0</span>]).float()</span><br><span class="line">        deg_sqrt = deg.pow(<span class="number">-0.5</span>)  <span class="comment"># (N, )</span></span><br><span class="line">        norm = deg_sqrt[row] * deg_sqrt[col]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Node feature matrix</span></span><br><span class="line">        tar_matrix = torch.index_select(x, dim=<span class="number">0</span>, index=col)</span><br><span class="line">        tar_matrix = norm.view(<span class="number">-1</span>, <span class="number">1</span>) * tar_matrix  <span class="comment"># (E, out_channel)</span></span><br><span class="line">        <span class="comment"># Aggregate information</span></span><br><span class="line">        aggr =  self.aggregation(tar_matrix, row)  <span class="comment"># (N, out_channel)</span></span><br><span class="line">        <span class="keyword">return</span> aggr</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calDegree</span><span class="params">(self, edges, num_nodes)</span>:</span></span><br><span class="line">        ind, deg = np.unique(edges.cpu().numpy(), return_counts=<span class="literal">True</span>)</span><br><span class="line">        deg_tensor = torch.zeros((num_nodes, ), dtype=torch.long)</span><br><span class="line">        deg_tensor[ind] = torch.from_numpy(deg)</span><br><span class="line">        <span class="keyword">return</span> deg_tensor.to(edges.device)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addSelfConnect</span><span class="params">(self, edge_index, num_nodes)</span>:</span></span><br><span class="line">        selfconn = torch.stack([torch.range(<span class="number">0</span>, num_nodes<span class="number">-1</span>, dtype=torch.long)]*<span class="number">2</span>,</span><br><span class="line">                               dim=<span class="number">0</span>).to(edge_index.device)</span><br><span class="line">        <span class="keyword">return</span> torch.cat(tensors=[edge_index, selfconn],</span><br><span class="line">                         dim=<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">aggregation</span><span class="params">(self, H, X_node)</span>:</span></span><br><span class="line">        mask = torch.stack([X_node] * self.node_num, <span class="number">0</span>)</span><br><span class="line">        mask = mask.float() - torch.unsqueeze(torch.arange(<span class="number">0</span>,self.node_num).float().to(mask.device), <span class="number">1</span>)</span><br><span class="line">        mask = (mask == <span class="number">0</span>).float()</span><br><span class="line">        <span class="comment"># (V, N) * (N, s) -&gt; (V, s)</span></span><br><span class="line">        <span class="keyword">return</span> torch.mm(mask, H)</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, feat_dim,  num_class, num_node)</span>:</span></span><br><span class="line">        super(GCNNet, self).__init__()</span><br><span class="line">        self.hidden_dim = <span class="number">16</span></span><br><span class="line">        self.feat_dim = feat_dim</span><br><span class="line">        self.conv1 = GCNConv(self.feat_dim, self.hidden_dim, num_node)</span><br><span class="line">        self.conv2 = GCNConv(self.hidden_dim, num_class, num_node)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, edge_index)</span>:</span></span><br><span class="line">        x = self.conv1(x, edge_index)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = F.dropout(x, <span class="number">0.5</span>)</span><br><span class="line">        x = self.conv2(x, edge_index)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> F.log_softmax(x, dim=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">x = feat_matrix.to(device)</span><br><span class="line">edge_index = torch.from_numpy(cites).to(device)</span><br><span class="line"></span><br><span class="line">writer2 = SummaryWriter(<span class="string">'./models/result'</span>, comment=<span class="string">'GCN'</span>)</span><br><span class="line">device = torch.device(<span class="string">'cuda'</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">'cpu'</span>)</span><br><span class="line">model = GCNNet(feat_dim, num_class, node_num).to(device)</span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=<span class="number">0.01</span>, weight_decay=<span class="number">5e-4</span>)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">200</span>):</span><br><span class="line">    model.train()</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    </span><br><span class="line">    out = model(feat_matrix, edge_index)</span><br><span class="line">    loss = F.nll_loss(out[train_mask], label_list[train_mask])</span><br><span class="line">    _, pred = out.max(dim=<span class="number">1</span>)</span><br><span class="line">    train_correct = float(pred[train_mask].eq(label_list[train_mask]).sum().item())</span><br><span class="line">    train_acc = train_correct / train_mask.sum().item()</span><br><span class="line">    <span class="comment"># print('[Epoch &#123;&#125;/200] Loss &#123;:.4f&#125;, train acc &#123;:.4f&#125;'.format(epoch, loss.cpu().detach().data.item(), acc))</span></span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line">    model.eval()</span><br><span class="line">    </span><br><span class="line">    test_correct = float(pred[test_mask].eq(label_list[test_mask]).sum().item())</span><br><span class="line">    test_acc = test_correct / test_mask.sum().item()</span><br><span class="line">    writer2.add_scalars(<span class="string">'GCN_Scalar'</span>, &#123;<span class="string">'loss'</span>: loss, <span class="string">'train_acc'</span>: train_acc, <span class="string">'test_acc'</span>: test_acc&#125;, epoch)</span><br><span class="line">    <span class="comment"># Evaluation on test data every 10 epochs</span></span><br><span class="line">    <span class="keyword">if</span> (epoch+<span class="number">1</span>) % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'[Epoch &#123;&#125;/200] Loss &#123;:.4f&#125;, train acc &#123;:.4f&#125;, test acc &#123;:.4f&#125;'</span>.format(epoch, loss.cpu().detach().data.item(), </span><br><span class="line">                                                                                     train_acc, test_acc))</span><br></pre></td></tr></table></figure>
-
-<pre><code>[Epoch 9/200] Loss 1.2767, train acc 0.5486, test acc 0.4980
-[Epoch 19/200] Loss 0.6863, train acc 0.8326, test acc 0.7140
-[Epoch 29/200] Loss 0.4053, train acc 0.8841, test acc 0.7800
-[Epoch 39/200] Loss 0.3105, train acc 0.9151, test acc 0.7960
-[Epoch 49/200] Loss 0.2718, train acc 0.9180, test acc 0.8040
-[Epoch 59/200] Loss 0.2481, train acc 0.9239, test acc 0.8100
-[Epoch 69/200] Loss 0.2297, train acc 0.9356, test acc 0.7980
-[Epoch 79/200] Loss 0.2325, train acc 0.9327, test acc 0.8100
-[Epoch 89/200] Loss 0.2231, train acc 0.9309, test acc 0.7860
-[Epoch 99/200] Loss 0.2060, train acc 0.9420, test acc 0.8020
-[Epoch 109/200] Loss 0.2024, train acc 0.9333, test acc 0.7960
-[Epoch 119/200] Loss 0.1971, train acc 0.9356, test acc 0.7980
-[Epoch 129/200] Loss 0.1997, train acc 0.9374, test acc 0.8080
-[Epoch 139/200] Loss 0.1841, train acc 0.9415, test acc 0.7960
-[Epoch 149/200] Loss 0.1775, train acc 0.9473, test acc 0.8000
-[Epoch 159/200] Loss 0.1756, train acc 0.9485, test acc 0.8180
-[Epoch 169/200] Loss 0.1778, train acc 0.9485, test acc 0.7760
-[Epoch 179/200] Loss 0.1704, train acc 0.9485, test acc 0.7760
-[Epoch 189/200] Loss 0.1656, train acc 0.9520, test acc 0.7860
-[Epoch 199/200] Loss 0.1577, train acc 0.9526, test acc 0.8020</code></pre><h2 id="两种模型比较可视化"><a href="#两种模型比较可视化" class="headerlink" title="两种模型比较可视化"></a>两种模型比较可视化</h2><p>可以很明显的发现是：GCN模型的表现能力远大于GNN</p>
-<p><img src="./imgs/GNN_Scalar.svg" width="500px" title='GNN' /> GNN<br><img src="./imgs/GCN_Scalar.svg" width="500px" title='GCN' /> GCN</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>无论GCN还是GNN都需要对整个图进行训练，也就是说没有泛化能力</li>
-<li>同等条件下GCN 比 GNN 要表现更好</li>
-<li>这些简单的图已经在PyG中有集成，可以直接快速调用</li>
-</ol>
-
+    
     
 
     
@@ -391,7 +324,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/" title="原生Pytorch实现GNN和GCN" target="_blank">http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/</a>
+          <a href="http://liuqinyi.github.io/Python/index.html" title="Python" target="_blank">http://liuqinyi.github.io/Python/index.html</a>
         </li>
         
         <li>
@@ -408,17 +341,6 @@
   <div class="article-info article-info-index">
     
     
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
     
 
     
@@ -469,7 +391,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://liuqinyi.github.io/2020/07/21/GNN_and_GCN/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://liuqinyi.github.io/Python/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -481,25 +403,6 @@
   </div>
 </article>
 
-
-<nav id="article-nav">
-  
-    <a href="/2020/08/06/Pytorch%E6%A2%AF%E5%BA%A6%E6%B1%82%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Pytorch自动求梯度详解
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/07/15/GraphRNN/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">GraphRNN</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
 
 
 <aside class="wrap-side-operation">
@@ -533,9 +436,9 @@
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "原生Pytorch实现GNN和GCN" -->
+  <!-- id: "Python" -->
   var giteement = new Giteement({
-    id: '20200721114525',
+    id: '20211201154908',
     owner: 'JxustLeek',
     repo: 'MyComment',
     backcall_uri: 'https://liuqinyi.github.io/',
@@ -593,7 +496,7 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
